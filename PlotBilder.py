@@ -38,66 +38,88 @@ def PlotBilder(ref):
 
     df_xcm = pd.DataFrame(pd.read_csv('database_xcom_make.csv'))
     df_stl = pd.DataFrame(pd.read_csv('database_stl_make.csv'))
-    for i in range(int(len(df_stl['Model']))):
-        df_stl['Model'][i] = df_stl['Model'][i].replace('-', '')
-        df_stl['Model'][i] = df_stl['Model'][i].replace(' ', '')
-        df_stl['Model'][i] = df_stl['Model'][i].upper()
-        df_stl = df_stl.replace(np.nan, '0', regex=True)
-        df_stl = df_stl.fillna('0')
+
+ 
+
+    def converter(converting_df,df_ref):
+        for i in range(int(len(converting_df['Model']))):
+            converting_df['Model'][i] = converting_df['Model'][i].replace('-', '')
+            converting_df['Model'][i] = converting_df['Model'][i].replace(' ', '')
+            converting_df['Model'][i] = converting_df['Model'][i].upper()
+
+        converting_df = converting_df.replace(np.nan, '0', regex=True)
+        converting_df = converting_df.fillna('0')
+        df_comp = converting_df.loc[(converting_df['Model'].isin(df_ref['ART_Model'])) | (converting_df['Model'].isin(df_ref['Name_Model']))]
+
+        mask = df_comp.duplicated(subset=['Model', 'Date', 'Time'])
+        df_comp = df_comp.loc[~mask]
+        df_comp.reset_index(drop=True, inplace=True)
+        df_comp['Current_Price'] = df_comp['Current_Price'].astype(int)
+        return df_comp
 
 
-    for i in range(int(len(df_xcm['Model']))):
-        df_xcm['Model'][i] = df_xcm['Model'][i].replace('-', '')
-        df_xcm['Model'][i] = df_xcm['Model'][i].replace(' ', '')
-        df_xcm['Model'][i] = df_xcm['Model'][i].upper()
-        df_xcm = df_xcm.replace(np.nan, '0', regex=True)
-        df_xcm = df_xcm.fillna('0')
-
-    df_comp = df_xcm.loc[(df_xcm['Model'].isin(df_ref['ART_Model'])) | (df_xcm['Model'].isin(df_ref['Name_Model']))]
-    mask = df_comp.duplicated(subset=['Model', 'Date', 'Time'])
-    df_comp = df_comp.loc[~mask]
-    df_comp.reset_index(drop=True, inplace=True)
-    df_comp['Current_Price'] = df_comp['Current_Price'].astype(int)
-
-    df_comp_cit = df_stl.loc[(df_stl['Model'].isin(df_ref['ART_Model'])) | (df_stl['Model'].isin(df_ref['Name_Model']))]
-    maskc = df_comp_cit.duplicated(subset=['Model', 'Date', 'Time'])
-    df_comp_cit = df_comp_cit.loc[~maskc]
-    df_comp_cit.reset_index(drop=True, inplace=True)
-    df_comp_cit['Current_Price'] = df_comp_cit['Current_Price'].astype(int)
 
     def checker_rule(df_for_check):
+
         checker_1 = []
         checker_min = []
         checker_max = []
-        c = []
-        df_check = pd.DataFrame(df_for_check.groupby(by=['Time', 'Date']).groups)
-        a = (df_check.columns)
+        date=[]
+        del_date=[]
+        del_time = []
+        a=[]
 
-        # проверка на повторение даты
-        for i in range(int(len(a))):
 
-            if a[i][0] == a[i - 1][0]:
-                checker_min.append(a[i])
-                checker_max.append(a[i - 1])
+        dict_group=df_for_check.groupby(by=['Time', 'Date']).groups
+
+        date=[*dict_group]
+
+
+        for i in range(int(len(date))):
+            if date[i][0] == date[i - 1][0]:
+                checker_min.append(date[i])
+                checker_max.append(date[i - 1])
+
         checker = list(set(checker_min + checker_max))
+
         for i in range(int(len(checker))):
             if checker[i] != max(checker):
                 checker_1.append(checker[i])
 
+
         for i in range(int(len(checker_1))):
-            df_check.pop(checker_1[i])
-        b = df_check.values
+            del_time.append(checker_1[i][1])
+            del_date.append(checker_1[i][0])
+            a.append(dict_group.get(checker[i]))
 
-        for i in range(len(b)):
-            for j in range(len(b[i])):
-                c.append(b[i][j])
-        df_for_check = df_for_check.iloc[c]
-        df_for_check = df_for_check.sort_values(by='Date')
-        df_for_check.reset_index(drop=True, inplace=True)
-        return df_for_check
 
-    df_comp_cit = checker_rule(df_comp_cit)
+        for i in range(len(a)):
+            #a.append(a[i])
+            df_res = df_for_check.drop(index=a[i])
+
+
+
+
+       # df_res=df_for_check.loc[df_for_check['Date'].isin(del_time) & df_for_check['Time'].isin(del_date)]
+
+        return df_res
+
+
+
+
+
+    df_comp=converter(df_xcm,df_ref)
+    df_comp_cit=converter(df_stl,df_ref)
+
     df_comp = checker_rule(df_comp)
+    df_comp_cit = checker_rule(df_comp_cit)
+    df_comp_cit.reset_index(drop=True, inplace=True)
+    df_comp.reset_index(drop=True, inplace=True)
+
+
+
+
+
 
 
 
