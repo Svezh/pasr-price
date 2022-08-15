@@ -71,6 +71,14 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+
         self.verticalLayout_4.addWidget(self.comboBox)
         self.verticalLayoutWidget_5 = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(280, 20, 141, 31))
@@ -100,24 +108,31 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Парсинг Citilink.ru"))
         self.pushButton_2.setText(_translate("MainWindow", "Парсинг xcom-shop"))
         self.pushButton_3.setText(_translate("MainWindow", "Вывод графика"))
-        self.comboBox.setItemText(0, _translate("MainWindow", "5E 650i"))
-        self.comboBox.setItemText(1, _translate("MainWindow", "5E 850i"))
-        self.comboBox.setItemText(2, _translate("MainWindow", "5E 1000i"))
+        self.comboBox.setItemText(0, _translate("MainWindow", "5E 650i"))#
+        self.comboBox.setItemText(1, _translate("MainWindow", "5E 850i"))#
+        self.comboBox.setItemText(2, _translate("MainWindow", "5E 1000i"))#
         self.comboBox.setItemText(3, _translate("MainWindow", "5E 1500i"))
-        self.comboBox.setItemText(4, _translate("MainWindow", "5E 2000i"))
-        self.comboBox.setItemText(5, _translate("MainWindow", "5P 650IR"))
-        self.comboBox.setItemText(6, _translate("MainWindow", "5P 850IR"))
-        self.comboBox.setItemText(7, _translate("MainWindow", "5P 1150IR"))
-        self.comboBox.setItemText(8, _translate("MainWindow", "5P 1550IR"))
-        self.comboBox.setItemText(9, _translate("MainWindow", "5SC 500i"))
-        self.comboBox.setItemText(10, _translate("MainWindow", "5SC 750i"))
-        self.comboBox.setItemText(11, _translate("MainWindow", "5SC 1000i"))
-        self.comboBox.setItemText(12, _translate("MainWindow", "5SC 1500i"))
-        self.comboBox.setItemText(13, _translate("MainWindow", "5SC 1000IR"))
-        self.comboBox.setItemText(14, _translate("MainWindow", "5SC 1500IR"))
-        self.comboBox.setItemText(15, _translate("MainWindow", "5SC 2200IRT"))
-        self.comboBox.setItemText(16, _translate("MainWindow", "5SC 3000IRT"))
-        self.comboBox.setItemText(17, _translate("MainWindow", "5E 500i"))
+        self.comboBox.setItemText(4, _translate("MainWindow", "5E 2000i"))#
+        self.comboBox.setItemText(5, _translate("MainWindow", "5P 650IR"))#
+        self.comboBox.setItemText(6, _translate("MainWindow", "5P 850IR"))#
+        self.comboBox.setItemText(7, _translate("MainWindow", "5P 1150IR"))#
+        self.comboBox.setItemText(8, _translate("MainWindow", "5SC 500i"))#
+        self.comboBox.setItemText(9, _translate("MainWindow", "5SC 750i"))#
+        self.comboBox.setItemText(10, _translate("MainWindow", "5SC 1000i"))#
+        self.comboBox.setItemText(11, _translate("MainWindow", "5SC 1500i"))#
+        self.comboBox.setItemText(12, _translate("MainWindow", "5SC 1000IR"))#
+        self.comboBox.setItemText(13, _translate("MainWindow", "5SC 1500IR"))#
+        self.comboBox.setItemText(14, _translate("MainWindow", "5SC 2200IRT"))#
+        self.comboBox.setItemText(15, _translate("MainWindow", "5SC 3000IRT"))#
+        self.comboBox.setItemText(16, _translate("MainWindow", "5E 500i"))#
+        self.comboBox.setItemText(17, _translate("MainWindow", "3S 450DIN"))#
+        self.comboBox.setItemText(18, _translate("MainWindow", "3S 550DIN"))#
+        self.comboBox.setItemText(19, _translate("MainWindow", "3S 700DIN"))#
+        self.comboBox.setItemText(20, _translate("MainWindow", "3S 850DIN"))#
+        self.comboBox.setItemText(21, _translate("MainWindow", "5PX 1500iRT"))#
+        self.comboBox.setItemText(22, _translate("MainWindow", "5PX 2200iRT"))#
+        self.comboBox.setItemText(23, _translate("MainWindow", "5PX 3000iRT"))#
+        self.comboBox.setItemText(24, _translate("MainWindow", "5PX 3000iRTN"))#
         self.pushButton_4.setText(_translate("MainWindow", "Парсинг всех сайтов"))
 
 
@@ -127,7 +142,6 @@ class Ui_MainWindow(object):
     def function(self):
 
         self.pushButton_3.clicked.connect(lambda: main_plot(self.comboBox.currentText()))
-        print(self.comboBox.currentText())
         self.pushButton_2.clicked.connect(lambda: main_xcm())
         self.pushButton.clicked.connect(lambda: main_cit())
         self.pushButton_4.clicked.connect(lambda: main_all())
