@@ -94,13 +94,7 @@ def PlotBilder(ref):
 
 
         for i in range(len(a)):
-            #a.append(a[i])
             df_res = df_for_check.drop(index=a[i])
-
-
-
-
-       # df_res=df_for_check.loc[df_for_check['Date'].isin(del_time) & df_for_check['Time'].isin(del_date)]
 
         return df_res
 
